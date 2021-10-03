@@ -17,29 +17,39 @@ Public Function GetElementCountOfThisString(ByVal aString As String, ByVal aDeli
 End Function
 
 ' 指定の文字で区切られている文字列に対し、
+' 区切り文字を除いた文字列をコレクションに格納して返す
+Public Function GetCollectionFromDelimitedStrings(ByVal aString As String, ByVal aDelimiter As String)
+  Set GetCollectionFromDelimitedStrings = New Collection
+  Dim v As Variant
+  For Each v In Split(aString, aDelimiter)
+    Call GetCollectionFromDelimitedStrings.Add(v)
+  Next v
+End Function
+
+
+' 指定の文字で区切られている文字列に対し、
 ' 区切り文字を除いた文字列を配列に格納。
 ' 指定の要素数までの文字列を区切り文字で区切って返す
 ' 指定の要素数が多すぎる、または少なすぎる場合、空文字を返す
 Public Function GetSplitedStrings(ByVal aString As String, ByVal aDelimiter As String, ByVal aCount As Long) As String
-  Dim lCollection As Collection: Set lCollection = New Collection
-  Dim v As Variant
-  For Each v In Split(aString, aDelimiter)
-    Call lCollection.Add(v)
-  Next v
-  If aCount <= 0 Or aCount > lCollection.Count - 1 Then
+  If aCount <= 0 Or aCount > GetCollectionFromDelimitedStrings(aString, aDelimiter).Count - 1 Then
     GetSplitedStrings = ""
     Exit Function
   End If
   Dim i As Long
   For i = 1 To aCount
-    GetSplitedStrings = GetSplitedStrings & lCollection(i) & "\"
+    GetSplitedStrings = GetSplitedStrings & GetCollectionFromDelimitedStrings(aString, aDelimiter)(i) & "\"
   Next i
 End Function
 
 ' 指定の文字で区切られている文字列に対し、
 ' 区切り文字を除いた文字列を配列に格納。
-' 指定の要素数に対応する文字列を返す
-' 指定の要素数が多すぎる、または少なすぎる場合、空文字を返す
+' 指定の添字に対応する配列要素を返す
+' 指定の添字が大きすぎる、または小さすぎる場合、空文字を返す
 Public Function GetSplitedString(ByVal aString As String, ByVal aDelimiter As String, ByVal aIndex As Long) As String
-
+  If aIndex <= 0 Or aIndex > GetCollectionFromDelimitedStrings(aString, aDelimiter).Count - 1 Then
+    GetSplitedString = ""
+    Exit Function
+  End If
+  GetSplitedString = GetCollectionFromDelimitedStrings(aString, aDelimiter)(aIndex)
 End Function
