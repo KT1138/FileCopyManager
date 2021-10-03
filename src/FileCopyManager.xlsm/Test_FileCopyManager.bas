@@ -178,3 +178,4 @@ Private Sub Test_Main()
   Debug.Assert lTestTools.AreEqual(.Test_GetAllBookNames(.Test_GetFolderPathOfThisWorkbook & "Test3\"), lFileNames)
   End With
 End Sub
+

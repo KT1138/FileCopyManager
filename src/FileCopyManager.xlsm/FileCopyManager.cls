@@ -188,3 +188,23 @@ Public Sub Main(ByVal aRootFolder As String, ByVal aKeyWord As String, ByVal aDe
     lFile.Copy aDestinationFolder, True
   Next lTargetFilePath
 End Sub
+
+' 引数に取ったファイルパスに対し、変更を加えて返す
+' コピー先フォルダのパス & "親フォルダ1の名前" & "_" & "親フォルダ2の名前" & "_" & ファイル名
+' (コピー元のファイル名には編集を加えない)
+' aFilePath … コピー元ファイル。絶対パスで入力
+' aParent1Depth … 親フォルダ1の深度。一つ上のフォルダを指定したいときは1、二つ上は2のように指定する
+' aParent2Depth … 親フォルダ2の深度。設定方法は親フォルダ1の場合と同じ
+' aTargetFolderPath … コピー先フォルダのパス。絶対パスで入力(末尾に"\"を付けること)
+Private Function GetConvertedFilePath(ByVal aFilePath As String, ByVal aParent1Depth As Long, ByVal aParent2Depth As Long, ByVal aTargetFolderPath As String) As String
+
+End Function
+
+
+' 引数に取ったファイルパスに対し、指定の数だけ上位のフォルダパスを返す
+' aFilePath … ファイルパス。絶対パスで入力
+' aParentDepth … 親フォルダ1の深度。一つ上のフォルダを指定したいときは1、二つ上は2のように指定する
+Private Function GetParentFolderName(ByVal aFilePath As String, ByVal aParentDepth As Long) As String
+
+End Function
+
