@@ -10,6 +10,8 @@ Public Sub Test_All_Test_FileCopyManager()
   Test_GetAllFolderPaths2
   Test_FindFiles
   Test_Main
+  Test_GetParentFolderName
+  Test_GetFileNameFromFilePath
 End Sub
 
 Private Sub Test_GetAllBookNames()
@@ -179,3 +181,20 @@ Private Sub Test_Main()
   End With
 End Sub
 
+Private Sub Test_GetParentFolderName()
+  Dim lFileCopyManager As FileCopyManager: Set lFileCopyManager = New FileCopyManager
+  Debug.Assert lFileCopyManager.Test_GetParentFolderName("C:\Users\Hoge\Desktop\FileCopyManager\bin", 1) = "FileCopyManager"
+  Debug.Assert lFileCopyManager.Test_GetParentFolderName("C:\Users\Hoge\Desktop\FileCopyManager\bin", 2) = "Desktop"
+  Debug.Assert lFileCopyManager.Test_GetParentFolderName("C:\Users\Hoge\Desktop\FileCopyManager\bin", 3) = "Hoge"
+  Debug.Assert lFileCopyManager.Test_GetParentFolderName("C:\Users\Hoge\Desktop\FileCopyManager\bin", 4) = "Users"
+  Debug.Assert lFileCopyManager.Test_GetParentFolderName("C:\Users\Hoge\Desktop\FileCopyManager\bin", 5) = "C:"
+  Debug.Assert lFileCopyManager.Test_GetParentFolderName("C:\Users\Hoge\Desktop\FileCopyManager\bin", 6) = ""
+End Sub
+
+Private Sub Test_GetFileNameFromFilePath()
+  Dim lFileCopyManager As FileCopyManager: Set lFileCopyManager = New FileCopyManager
+  Debug.Assert lFileCopyManager.Test_GetFileNameFromFilePath("C:\Users\Hoge\Desktop\FileCopyManager\bin\Hoge.xlsx") = "Hoge.xlsx"
+  Debug.Assert lFileCopyManager.Test_GetFileNameFromFilePath("C:\Users\Hoge\Desktop\FileCopyManager\Hoge.xlsx") = "Hoge.xlsx"
+  Debug.Assert lFileCopyManager.Test_GetFileNameFromFilePath("C:\Users\Hoge\Desktop\Hoge.xlsx") = "Hoge.xlsx"
+  Debug.Assert lFileCopyManager.Test_GetFileNameFromFilePath("C:\Users\Hoge\Desktop\") = ""
+End Sub

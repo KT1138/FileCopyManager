@@ -19,13 +19,14 @@ End Function
 ' 指定の文字で区切られている文字列に対し、
 ' 区切り文字を除いた文字列をコレクションに格納して返す
 Public Function GetCollectionFromDelimitedStrings(ByVal aString As String, ByVal aDelimiter As String)
+  ' 末尾に区切り文字がついていない場合
+  If Right(aString, 1) <> aDelimiter Then aString = aString & aDelimiter
   Set GetCollectionFromDelimitedStrings = New Collection
   Dim v As Variant
   For Each v In Split(aString, aDelimiter)
     Call GetCollectionFromDelimitedStrings.Add(v)
   Next v
 End Function
-
 
 ' 指定の文字で区切られている文字列に対し、
 ' 区切り文字を除いた文字列を配列に格納。

@@ -10,10 +10,12 @@ Attribute VB_Exposed = False
 Option Explicit
 
 'Private mFSO As Object
-'
-'Public Sub Class_Initalize()
-'  Set mFSO = CreateObject("Scripting.FileSystemObject")
-'End Sub
+Private mCustomString As CustomString
+
+
+Public Sub Class_Initialize()
+  Set mCustomString = New CustomString
+End Sub
 
 ' 指定のフォルダのブック名を、コレクションに格納して返す
 ' 引数には、フォルダを絶対パスで、末尾に "\" をつけて返す
@@ -197,14 +199,26 @@ End Sub
 ' aParent2Depth … 親フォルダ2の深度。設定方法は親フォルダ1の場合と同じ
 ' aTargetFolderPath … コピー先フォルダのパス。絶対パスで入力(末尾に"\"を付けること)
 Private Function GetConvertedFilePath(ByVal aFilePath As String, ByVal aParent1Depth As Long, ByVal aParent2Depth As Long, ByVal aTargetFolderPath As String) As String
-
+  ' under construction
 End Function
 
-
-' 引数に取ったファイルパスに対し、指定の数だけ上位のフォルダパスを返す
+' 引数に取ったファイルパスに対し、指定の数だけ上位のフォルダ名を返す
 ' aFilePath … ファイルパス。絶対パスで入力
 ' aParentDepth … 親フォルダ1の深度。一つ上のフォルダを指定したいときは1、二つ上は2のように指定する
 Private Function GetParentFolderName(ByVal aFilePath As String, ByVal aParentDepth As Long) As String
-
+  Const DELIMITER As String = "\"
+  GetParentFolderName = mCustomString.GetSplitedString(aFilePath, DELIMITER, mCustomString.GetCollectionFromDelimitedStrings(aFilePath, DELIMITER).Count - aParentDepth - 1)
+End Function
+Public Function Test_GetParentFolderName(ByVal aFilePath As String, ByVal aParentDepth As Long) As String
+  Test_GetParentFolderName = GetParentFolderName(aFilePath, aParentDepth)
 End Function
 
+' 引数にとったファイルパスより、ファイル名を抜き出して返す
+' フォルダパスを受け取った場合、空文字を返す
+Private Function GetFileNameFromFilePath(ByVal aFilePath As String) As String
+  Const DELIMITER As String = "\"
+  GetFileNameFromFilePath = IIf(Right(aFilePath, 1) = DELIMITER, "", mCustomString.GetSplitedString(aFilePath, DELIMITER, mCustomString.GetCollectionFromDelimitedStrings(aFilePath, DELIMITER).Count - 1))
+End Function
+Public Function Test_GetFileNameFromFilePath(ByVal aFilePath As String) As String
+  Test_GetFileNameFromFilePath = GetFileNameFromFilePath(aFilePath)
+End Function
