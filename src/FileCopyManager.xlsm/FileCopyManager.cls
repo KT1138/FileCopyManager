@@ -199,7 +199,15 @@ End Sub
 ' aParent2Depth … 親フォルダ2の深度。設定方法は親フォルダ1の場合と同じ
 ' aTargetFolderPath … コピー先フォルダのパス。絶対パスで入力(末尾に"\"を付けること)
 Private Function GetConvertedFilePath(ByVal aFilePath As String, ByVal aParent1Depth As Long, ByVal aParent2Depth As Long, ByVal aTargetFolderPath As String) As String
-  ' under construction
+  ' ファイル名を得る
+  Dim lFileName As String: lFileName = GetFileNameFromFilePath(aFilePath)
+  ' ファイル名を変更する
+  lFileName = GetParentFolderName(aFilePath, aParent1Depth) & "_" & GetParentFolderName(aFilePath, aParent2Depth) & "_" & lFileName
+  ' コピー先ファイルパスを得る
+  GetConvertedFilePath = aTargetFolderPath & lFileName
+End Function
+Public Function Test_GetConvertedFilePath(ByVal aFilePath As String, ByVal aParent1Depth As Long, ByVal aParent2Depth As Long, ByVal aTargetFolderPath As String) As String
+  Test_GetConvertedFilePath = GetConvertedFilePath(aFilePath, aParent1Depth, aParent2Depth, aTargetFolderPath)
 End Function
 
 ' 引数に取ったファイルパスに対し、指定の数だけ上位のフォルダ名を返す

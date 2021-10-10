@@ -12,6 +12,7 @@ Public Sub Test_All_Test_FileCopyManager()
   Test_Main
   Test_GetParentFolderName
   Test_GetFileNameFromFilePath
+  Test_GetConvertedFilePath
 End Sub
 
 Private Sub Test_GetAllBookNames()
@@ -197,4 +198,16 @@ Private Sub Test_GetFileNameFromFilePath()
   Debug.Assert lFileCopyManager.Test_GetFileNameFromFilePath("C:\Users\Hoge\Desktop\FileCopyManager\Hoge.xlsx") = "Hoge.xlsx"
   Debug.Assert lFileCopyManager.Test_GetFileNameFromFilePath("C:\Users\Hoge\Desktop\Hoge.xlsx") = "Hoge.xlsx"
   Debug.Assert lFileCopyManager.Test_GetFileNameFromFilePath("C:\Users\Hoge\Desktop\") = ""
+End Sub
+
+Private Sub Test_GetConvertedFilePath()
+  Dim lFileCopyManager As FileCopyManager: Set lFileCopyManager = New FileCopyManager
+  Debug.Assert lFileCopyManager.Test_GetConvertedFilePath("C:\Users\Hoge\Desktop\FileCopyManager\bin\Hoge.xlsx", 2, 1, "C:\Users\Hoge\Desktop\Destination\") = _
+    "C:\Users\Hoge\Desktop\Destination\FileCopyManager_bin_Hoge.xlsx"
+  Debug.Assert lFileCopyManager.Test_GetConvertedFilePath("C:\Users\Hoge\Desktop\FileCopyManager\bin\Hoge.xlsx", 3, 1, "C:\Users\Hoge\Desktop\Destination\") = _
+    "C:\Users\Hoge\Desktop\Destination\Desktop_bin_Hoge.xlsx"
+  Debug.Assert lFileCopyManager.Test_GetConvertedFilePath("C:\Users\Hoge\Desktop\FileCopyManager\bin\Hoge.xlsx", 7, 1, "C:\Users\Hoge\Desktop\Destination\") = _
+    "C:\Users\Hoge\Desktop\Destination\_bin_Hoge.xlsx"
+  Debug.Assert lFileCopyManager.Test_GetConvertedFilePath("C:\Users\Hoge\Desktop\FileCopyManager\bin\Hoge.xlsx", 8, 9, "C:\Users\Hoge\Desktop\Destination\") = _
+    "C:\Users\Hoge\Desktop\Destination\__Hoge.xlsx"
 End Sub
