@@ -10,6 +10,7 @@ Public Sub Test_All_Test_FileCopyManager()
   Test_GetAllFolderPaths2
   Test_FindFiles
   Test_Main
+  Test_Main2
   Test_GetParentFolderName
   Test_GetFileNameFromFilePath
   Test_GetConvertedFilePath
@@ -179,6 +180,41 @@ Private Sub Test_Main()
     
   With lFileCopyManager
   Debug.Assert lTestTools.AreEqual(.Test_GetAllBookNames(.Test_GetFolderPathOfThisWorkbook & "Test3\"), lFileNames)
+  End With
+End Sub
+
+Private Sub Test_Main2()
+  Dim lFileCopyManager As FileCopyManager: Set lFileCopyManager = New FileCopyManager
+  Dim lTestTools As TestTools: Set lTestTools = New TestTools
+  Dim lFSO As Object: Set lFSO = CreateObject("Scripting.FileSystemObject")
+  Call lFileCopyManager.Test_RemoveAllFiles(lFileCopyManager.Test_GetFolderPathOfThisWorkbook & "Test4\")
+  Call lFileCopyManager.Main2(lFileCopyManager.Test_GetFolderPathOfThisWorkbook & "Test2\", "data", 4, lFileCopyManager.Test_GetFolderPathOfThisWorkbook & "Test4\", 1, 2)
+
+  Dim lFileNames As Collection: Set lFileNames = New Collection
+  Call lFileNames.Add("2_2-1_data2-1.txt")
+  Call lFileNames.Add("2_2-1_data2-2.txt")
+  Call lFileNames.Add("3-1_3-2_data3-1.txt")
+  Call lFileNames.Add("3-1_3-2_data3-2.txt")
+  Call lFileNames.Add("3-1_3-2_data3-3.txt")
+  Call lFileNames.Add("3_3-1_data3-1.txt")
+  Call lFileNames.Add("3_3-1_data3-2.txt")
+  Call lFileNames.Add("4-1_4-2_data4-1.txt")
+  Call lFileNames.Add("4-1_4-2_data4-2.txt")
+  Call lFileNames.Add("4-1_4-2_data4-3.txt")
+  Call lFileNames.Add("4-2_4-3_data4-1.txt")
+  Call lFileNames.Add("4-2_4-3_data4-2.txt")
+  Call lFileNames.Add("4-2_4-3_data4-3.txt")
+  Call lFileNames.Add("4-2_4-3_data4-4.txt")
+  Call lFileNames.Add("4_4-1_data4-1.txt")
+  Call lFileNames.Add("4_4-1_data4-2.txt")
+  Call lFileNames.Add("bin_Test2_data0.txt")
+  Call lFileNames.Add("Test2_1_data1-1.txt")
+  Call lFileNames.Add("Test2_2_data2-1.txt")
+  Call lFileNames.Add("Test2_3_data3-1.txt")
+  Call lFileNames.Add("Test2_4_data4-1.txt")
+  
+  With lFileCopyManager
+  Debug.Assert lTestTools.AreEqual(.Test_GetAllBookNames(.Test_GetFolderPathOfThisWorkbook & "Test4\"), lFileNames)
   End With
 End Sub
 

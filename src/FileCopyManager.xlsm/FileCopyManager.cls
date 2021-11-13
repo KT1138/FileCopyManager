@@ -191,6 +191,30 @@ Public Sub Main(ByVal aRootFolder As String, ByVal aKeyWord As String, ByVal aDe
   Next lTargetFilePath
 End Sub
 
+
+' 起点フォルダのサブフォルダに対し、指定の文言を含むファイルが無いか検索
+' ファイルがあれば、ファイル名を以下のように変更した上で、コピー先フォルダへコピーする
+' 親フォルダ1の名前_親フォルダ2の名前_ファイル名
+' コピー先のファイル名は変更するが、コピー元のファイル名は変更しないことに注意すること
+' コピー先に同名ファイルがある場合は上書きする
+' aRootFolder … 起点フォルダ。絶対パスで入力(末尾に"\"を付けること)
+' aKeyWord … この文言を含むファイルを検索する
+' aDepth … 何階層下のサブフォルダまで検索を行うか指定。起点フォルダ内のみ検索したい場合、0 を指定する
+' aDestinationFolder … コピー先フォルダ。絶対パスで入力(末尾に"\"を付けること)
+' aParent1Depth … 親フォルダ1の深度。一つ上のフォルダを指定したいときは1、二つ上は2のように指定する
+' aParent2Depth … 親フォルダ2の深度。設定方法は親フォルダ1の場合と同じ
+Public Sub Main2(ByVal aRootFolder As String, ByVal aKeyWord As String, ByVal aDepth As Long, ByVal aDestinationFolder As String, ByVal aParent1Depth As Long, ByVal aParent2Depth As Long)
+' under construction
+  Dim lFSO As Object: Set lFSO = CreateObject("Scripting.FileSystemObject")
+  Dim lTargetFilePath As Variant
+  For Each lTargetFilePath In FindFiles(aRootFolder, aKeyWord, aDepth)
+    Dim lFile As Object: Set lFile = lFSO.GetFile(lTargetFilePath)
+    'lFile.Copy aDestinationFolder, True
+    lFile.Copy GetConvertedFilePath(lTargetFilePath, aParent2Depth, aParent1Depth, aDestinationFolder)
+  Next lTargetFilePath
+End Sub
+
+
 ' 引数に取ったファイルパスに対し、変更を加えて返す
 ' コピー先フォルダのパス & "親フォルダ1の名前" & "_" & "親フォルダ2の名前" & "_" & ファイル名
 ' (コピー元のファイル名には編集を加えない)
